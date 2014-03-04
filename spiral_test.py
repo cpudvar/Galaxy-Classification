@@ -6,28 +6,41 @@ import matplotlib
 def main():
     #read in FITS file, find midpoint
     
+    #from location of python script
+    imageFileLocation = "images/"
+    
     #header data unit
-    hdulist = fits.open('rosat_pspc_rdf2_3_bk2.fits')
-    print hdulist.info()
+    hdulist = fits.open(imageFileLocation+"658nmos.fits")
+    #print hdulist.info()
     
     imageData = hdulist[0].data
     
+    # TODO: make sure this works for all images
+    width, height = getDimensions(hdulist["PRIMARY"])
+    
+    print "Width: ", width 
+    print "Height: ",  height   
     
     minValue, maxValue = findPixelRange(imageData)
     print "Min value: " , minValue , "\nMax value: " , maxValue
     
     hdulist.close()
     
+def getDimensions(data):    
+    dimensions = data.shape
+    
+    return dimensions[0], dimensions[1]
+    
 def findPixelRange(fileName):
     minValue=9999
     maxValue=0
-    
+
     for x in range(512):
         for y in range(512):
             if fileName[x,y] < minValue:
-                minValue = file[x,y]
+                minValue = fileName[x,y]
             if fileName[x,y] > maxValue:
-                maxValue = file[x,y]
+                maxValue = fileName[x,y]
                 
     return minValue, maxValue
     
