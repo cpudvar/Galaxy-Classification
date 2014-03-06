@@ -19,12 +19,9 @@ def main():
     imageData = hdulist[0].data
     
     # TODO: make sure this works for all images
-    width, height = getDimensions(hdulist["PRIMARY"])
+    dimensions = getDimensions(hdulist["PRIMARY"])  
     
-    print "Width: ", width 
-    print "Height: ",  height   
-    
-    minValue, maxValue, pixelValues = findPixelRange(imageData)
+    minValue, maxValue, pixelValues = findPixelRange(imageData, dimensions)
     print "Min value: " , minValue , "\nMax value: " , maxValue
     
     plotTable(pixelValues)
@@ -34,34 +31,39 @@ def main():
 def getDimensions(data):    
     dimensions = data.shape
     
-    return dimensions[0], dimensions[1]
+    return dimensions
 
 def plotTable(yData):
     numPoints = len(yData)
     xData = []
     
     for i in range(numPoints):
-        xData.append(i+1)
-        
+        xData.append(i+1)        
     
     entries = len(xData)
     
+    #view vales that are plotted
+    """
     for i in range(entries):
         print xData[i], yData[i]
-        
-    matplotlib.pyplot.scatter(xData, yData)
+    """
     
+    matplotlib.pyplot.scatter(xData, yData)    
     pylab.show()
     
-def findPixelRange(fileName):
+def findPixelRange(fileName, dimensions):
     minValue=9999
     maxValue=0
     pixelValues = []
     
-    y = 800
+    width = dimensions[0]
+    height = dimensions[1]
+    
+    #find midpt of height -> values for horizontal line
+    y = height/2
 
-    #dont hardcode dimensions of image
     """
+    #finds range of pixel values for a given image (min and max)
     for x in range(1600):
         for y in range(1600):
             if fileName[x,y] < minValue:
@@ -69,18 +71,11 @@ def findPixelRange(fileName):
             if fileName[x,y] > maxValue:
                 maxValue = fileName[x,y]
     """
-    for x in range(1600):
+    
+    for x in range(width):
         pixelValues.append(fileName[x,y])
                 
-    return minValue, maxValue, pixelValues
-    
-def plotHorizontal(midpoint, image, height, width, fileName):
-    for x in range(width):
-        print x, fileName[midpoint-1, x]
-        
-        pass
-        #write x, value to .csv
-        
+    return minValue, maxValue, pixelValues        
     
 if __name__ == '__main__':
     main()
