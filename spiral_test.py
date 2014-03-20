@@ -2,6 +2,8 @@ from astropy.io import fits
 import numpy
 import scipy
 import matplotlib
+from scipy import ndimage
+from scipy import misc
 
 def main():
     #read in FITS file, find midpoint
@@ -17,13 +19,14 @@ def main():
     
     # TODO: make sure this works for all images
     width, height = getDimensions(hdulist["PRIMARY"])
+
+    brightest = blurring(imageData)
     
     print "Width: ", width 
     print "Height: ",  height   
-    
     minValue, maxValue = findPixelRange(imageData)
     print "Min value: " , minValue , "\nMax value: " , maxValue
-    
+    print "brightest: ", brightest
     hdulist.close()
     
 def getDimensions(data):    
@@ -54,6 +57,12 @@ def plotHorizontal(midpoint, image, height, width, fileName):
 def graphValue(fileName):
     #plot 
     pass
+
+def blurring(hdulist):
+    blurred = ndimage.gaussian_filter(hdulist, 5)
+    return blurred 
+
+
     
 if __name__ == '__main__':
     main()
