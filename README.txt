@@ -1,12 +1,18 @@
 Galaxy-Classification
 =====================
 
-(Add adequate description of program at later date)
+(Add detailed description)
+
+=====================
 
 Current Dependencies are as follows:
   -(Python 2.7)
   -Numpy
   -Scipy
-  -Matplotlib
-  -Astropy
+  -Matplotlib 
+  -Astropy 
   -f2n
+    -PIL
+
+=====================
+
