@@ -6,12 +6,13 @@ import matplotlib
 import pylab
 import os
 
-imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'Images'))
-imageName = "/658nmos.fits"
-
-myimage = f2n.fromfits(imageFileLocation + imageName)
-
-myimage.setzscale()
-myimage.makepilimage("log", negative = False)
-
-myimage.tonet("file.png")
+def convert(imageName):
+    
+    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'Images'))
+    
+    myimage = f2n.fromfits(imageFileLocation + imageName)
+    
+    myimage.setzscale()
+    myimage.makepilimage("log", negative = False)
+    
+    myimage.tonet("file.png")
