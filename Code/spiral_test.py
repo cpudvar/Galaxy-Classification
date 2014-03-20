@@ -4,6 +4,7 @@ import scipy
 import matplotlib
 import pylab
 import os
+from scipy import ndimage
 
 def main():
     imageName = "/658nmos.fits"
@@ -20,11 +21,14 @@ def main():
     
     # TODO: make sure this works for all images
     dimensions = getDimensions(hdulist["PRIMARY"])  
+    brightest = blurring(imageData)
     
     minValue, maxValue, pixelValues = findPixelRange(imageData, dimensions)
     print "Min value: " , minValue , "\nMax value: " , maxValue
-    
+    print "brightest", brightest
     plotTable(pixelValues)
+
+    
     
     hdulist.close()
     
@@ -75,7 +79,12 @@ def findPixelRange(fileName, dimensions):
     for x in range(width):
         pixelValues.append(fileName[x,y])
                 
-    return minValue, maxValue, pixelValues        
+    return minValue, maxValue, pixelValues  
+
+def blurring(imag):
+    blurred = ndimage.gaussian_filter(imag, 5)
+    return blurred
+
     
 if __name__ == '__main__':
     main()
