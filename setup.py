@@ -55,7 +55,7 @@ def installAstro():
     code.write(f.read())
 
     unzip(filename, 'MASTER')
-    call = s.call(['python', os.path.join(os.getcwd,'MASTER','setup.py') 'install'])
+    call = s.call(['python', os.path.join(os.getcwd(),'MASTER','astropy-master','astropy-master','setup.py') 'install'])
     if (call==0):
         print ("Astropy Installed Successfully")
         s.call(['rm', '-rf', 'MASTER'])
@@ -69,12 +69,12 @@ def installPIL():
     filename = 'Imaging-1.1.7.tar.gz'
     f = urllib2.urlopen(url+filename)
     with open(filename, "wb") as code:
-    code.write(f.read())
+        code.write(f.read())
 
     tfile = tarfile.open(filename, 'r:gz')
     tfile.extractall('.')
     tfile.close()
-    call = s.call(['python', os.path.join(os.getcwd,filename[:-7],'setup.py') 'install'])
+    call = s.call(['python', os.path.join(os.getcwd(),filename[:-7],'setup.py') 'install'])
     if (call==0):
         print ("PIL Installed Successfully")
         ret = s.call(['rm', '-rf', filename[:-7])
