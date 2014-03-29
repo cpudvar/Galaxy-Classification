@@ -83,7 +83,18 @@ def findPixelRange(fileName, dimensions):
 
 def blurring(imag):
     blurred = ndimage.gaussian_filter(imag, 5)
+    # maxBright = -1
+    # brightx = 0
+    # brighty = 0
+    # for brightx in blurred:
+    #     for brighty in blurred:
+    #         if blurred [brightx][brighty] > maxBright:
+    #             maxBright = blurred[brightx][brighty]
+    # print maxBright
     return blurred
+
+def drawContour(imag):
+    print countour
 
     
 if __name__ == '__main__':
