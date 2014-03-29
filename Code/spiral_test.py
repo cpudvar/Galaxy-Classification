@@ -5,16 +5,25 @@ import matplotlib
 import pylab
 import os
 from scipy import ndimage
+import sys
 
 def main():
-    imageName = "/658nmos.fits"
+    imageName = "658nmos.fits"
+    #We should make this non-hardcoded in ANY way
+    ###
+    #if (len(sys.argv)!=2):
+        #imageName = sys.argv[1]
+    ###
     #read in FITS file, find midpoint
-    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'Images'))
+    #Get location of script because path is basically
+    #  hardcoded in. Find a better way?
+    os.chdir(os.path.dirname(sys.argv[0]))
+    imageFileLocation = os.path.abspath(os.path.join(os.pardir, 'images'))
     print imageFileLocation
     #from location of python script
     
     #header data unit    
-    hdulist = fits.open(imageFileLocation + imageName)
+    hdulist = fits.open(os.path.join(imageFileLocation, imageName))
     #print hdulist.info()
     
     imageData = hdulist[0].data
@@ -28,15 +37,11 @@ def main():
     print "brightest", brightest
     plotTable(pixelValues)
 
-    
-    
     hdulist.close()
     
 def getDimensions(data):    
-    dimensions = data.shape
+    return data.shape
     
-    return dimensions
-
 def plotTable(yData):
     numPoints = len(yData)
     xData = []
