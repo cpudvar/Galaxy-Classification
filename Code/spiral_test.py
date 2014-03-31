@@ -9,7 +9,7 @@ import sys
 
 def main():
     imageName = "658nmos.fits"
-    #We should make this non-hardcoded in ANY way
+    #We should make this non-hardcoded in ANY way --> Caleb agrees
     ###
     #if (len(sys.argv)!=2):
         #imageName = sys.argv[1]
