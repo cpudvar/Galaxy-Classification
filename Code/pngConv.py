@@ -8,11 +8,11 @@ import os
 
 def convert(imageName):
     
-    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'Images'))
+    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'images'))
     
-    myimage = f2n.fromfits(imageFileLocation + imageName)
+    myimage = f2n.fromfits(imageFileLocation + '\\' + imageName)
     
     myimage.setzscale()
     myimage.makepilimage("log", negative = False)
     
-    myimage.tonet("file.png")
+    myimage.tonet("image.png")
