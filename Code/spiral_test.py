@@ -9,7 +9,7 @@ from scipy import ndimage
 from pngConv import *
 
 def main():
-    imageName = "red.fits"
+    imageName = "m101_050511_12i60m_L.fits"
     
     # for testing, save image data as .png for viewing
     convert(imageName)    
