@@ -14,7 +14,7 @@ def main():
     # for testing, save image data as .png for viewing
     convert(imageName)    
         
-    #We should make this non-hardcoded in ANY way --> Caleb agrees
+    # We should make this non-hardcoded in ANY way --> Caleb agrees
     
     #if (len(sys.argv)!=2):
         #imageName = sys.argv[1]
@@ -27,7 +27,7 @@ def main():
     
     print imageFileLocation #from location of python script  
     
-    #header data unit    
+    # header data unit    
     hdulist = fits.open(os.path.join(imageFileLocation, imageName))
     print hdulist.info()
     
@@ -35,11 +35,14 @@ def main():
     
     # TODO: make sure this works for all images
     dimensions = getDimensions(hdulist["PRIMARY"])  
-    #brightest = blurring(imageData)
     
     minValue, maxValue, horizontalMidpointArray, verticalMidpointArray = findPixelRange(imageData, dimensions)
+    
+    # display range of pixel values for given image
     print "Min value: " , minValue , "\nMax value: " , maxValue
-    #print "brightest", brightest
+     
+    brightest = blurring(imageData)
+    print "brightest", brightest
     
     plotTable(horizontalMidpointArray)
     plotTable(verticalMidpointArray)
