@@ -10,7 +10,7 @@ def convert(imageName):
     
     imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'images'))
     
-    myimage = f2n.fromfits(imageFileLocation + '\\' + imageName)
+    myimage = f2n.fromfits(os.path.join(imageFileLocation, imageName))
     
     myimage.setzscale()
     myimage.makepilimage("log", negative = False)
