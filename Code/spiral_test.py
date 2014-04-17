@@ -10,14 +10,16 @@ from scipy import ndimage
 from pngConv import *
 
 def get_options():
+    #Gets options from command line
     usage = """
     Read in a FITS file for identification. 
 
-    spiral_test.py [image_name] 
+    spiral_test.py [image_name] [opts] 
     """ 
     parser = OptionParser(usage=usage)
     parser.add_option("-c", default=False, action='store_true',
-                  help="Prints out image with contour lines")
+                  help="Prints out image with contour lines",
+                  dest="contour")
     parser.add_option("-l","--location", 
                   default=os.path.abspath(os.path.join(os.pardir, 'images')),
                   help="Select new location for images")
@@ -25,7 +27,10 @@ def get_options():
     global opts
     (opts, args) = parser.parse_args()
     #if len(args) < 1:
-        #parser.error('Incorrect args')
+        #parser.error('Must Enter Image Name')
+
+    #global image
+    #image = args[1]
 
     return
 
@@ -69,6 +74,8 @@ def main():
     
     plotTable(horizontalMidpointArray)
     plotTable(verticalMidpointArray)
+    #if (opts.contour):
+        #drawContour(os.path.join(imageFileLocation, imageName))
     hdulist.close()
     
 def getDimensions(data):    
