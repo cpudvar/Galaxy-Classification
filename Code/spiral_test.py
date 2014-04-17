@@ -3,12 +3,35 @@ import numpy
 import scipy
 import matplotlib
 import pylab
+from optparse import OptionParser
 import os
 import sys
 from scipy import ndimage
 from pngConv import *
 
+def get_options():
+    usage = """
+    Read in a FITS file for identification. 
+
+    spiral_test.py [image_name] 
+    """ 
+    parser = OptionParser(usage=usage)
+    parser.add_option("-c", default=False, action='store_true',
+                  help="Prints out image with contour lines")
+    parser.add_option("-l","--location", 
+                  default=os.path.abspath(os.path.join(os.pardir, 'images')),
+                  help="Select new location for images")
+
+    global opts
+    (opts, args) = parser.parse_args()
+    #if len(args) < 1:
+        #parser.error('Incorrect args')
+
+    return
+
+
 def main():
+    get_options()
     imageName = "m101_050511_12i60m_L.fits"
     
     # for testing, save image data as .png for viewing
@@ -23,7 +46,7 @@ def main():
     #Get location of script because path is basically
     #  hardcoded in. Find a better way?
     #os.chdir(os.path.dirname(sys.argv[0]))
-    imageFileLocation = os.path.abspath(os.path.join(os.pardir, 'images'))
+    imageFileLocation = opts.location
     
     print imageFileLocation #from location of python script  
     
