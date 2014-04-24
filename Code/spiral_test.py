@@ -8,6 +8,7 @@ import os
 import sys
 from scipy import ndimage
 from pngConv import *
+import matplotlib.pyplot as plt
 
 def get_options():
     #Gets options from command line
@@ -53,27 +54,26 @@ def main():
     #os.chdir(os.path.dirname(sys.argv[0]))
     imageFileLocation = opts.location
     
-    print imageFileLocation #from location of python script  
+    #print imageFileLocation #from location of python script  
     
     # header data unit    
     hdulist = fits.open(os.path.join(imageFileLocation, imageName))
-    print hdulist.info()
-    
     imageData = hdulist[0].data
+    #print hdulist.info()
     
-    # TODO: make sure this works for all images
     dimensions = getDimensions(hdulist["PRIMARY"])  
     
     minValue, maxValue, horizontalMidpointArray, verticalMidpointArray = findPixelRange(imageData, dimensions)
     
     # display range of pixel values for given image
     print "Min value: " , minValue , "\nMax value: " , maxValue
-     
-    brightest = blurring(imageData)
-    print "brightest", brightest
     
     plotTable(horizontalMidpointArray)
     plotTable(verticalMidpointArray)
+    
+    blurredImage = blur(imageData)
+    contourImage = drawContour(blurredImage)
+    
     #if (opts.contour):
         #drawContour(os.path.join(imageFileLocation, imageName))
     hdulist.close()
@@ -119,26 +119,25 @@ def plotTable(yAxisData):
     
     #increment by 1 across x-axis
     for i in range(numPoints):
-        xAxisData.append(i+1)        
+        xAxisData.append(i+1)
 
     matplotlib.pyplot.scatter(xAxisData, yAxisData)    
     pylab.show()
 
-def blurring(image):
-    blurred = ndimage.gaussian_filter(image, 5)
-    # maxBright = -1
-    # brightx = 0
-    # brighty = 0
-    # for brightx in blurred:
-    #     for brighty in blurred:
-    #         if blurred [brightx][brighty] > maxBright:
-    #             maxBright = blurred[brightx][brighty]
-    # print maxBright
-    return blurred
-
-def drawContour(image):
-    print contour
-
+def blur(imageData):
+    #also take parameter for sigma?
+    img = ndimage.gaussian_filter(imageData, sigma=7, order=0)
+    plt.imshow(img, interpolation='nearest')
+    plt.show() 
+    
+    return img
+    
+def drawContour(img):
+    contour_image = plt.contour(img, 5)
+    plt.clabel(contour_image, inline=1, fontsize=10)
+    plt.show()
+    
+    return contour_image
     
 if __name__ == '__main__':
     main()
