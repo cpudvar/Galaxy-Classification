@@ -1,5 +1,9 @@
+<<<<<<< HEAD
 import os
 import sys
+=======
+from astropy.io import fits
+>>>>>>> 1b9f86217a56f969e981f7a5d614b89618642822
 import f2n
 import numpy
 import scipy
@@ -25,21 +29,23 @@ def get_options():
                   default=os.path.abspath(os.path.join(os.pardir, 'images')),
                   help="Select new location for images")
 
-    global opts
+    global opts,imageName
     (opts, args) = parser.parse_args()
-    #if len(args) < 1:
-        #parser.error('Must Enter Image Name')
-
-    #global image
-    #image = args[1]
+    if len(args) != 1:
+        print ("Using default image")
+        imageName = "m101_050511_12i60m_L.fits"
+    else:
+        imageName = args[1]
 
     return
 
 def main():
     get_options()
-    imageName = "m101_050511_12i60m_L.fits"
     
+    imageFileLocation = os.path.join(opts.location,imageName)
+
     # for testing, save image data as .png for viewing
+<<<<<<< HEAD
     #convert(imageName)    
         
     # We should make this non-hardcoded in ANY way --> Caleb agrees
@@ -54,9 +60,12 @@ def main():
     imageFileLocation = opts.location
     
     #print imageFileLocation #from location of python script  
+=======
+    convert(imageFileLocation)
+>>>>>>> 1b9f86217a56f969e981f7a5d614b89618642822
     
     # header data unit    
-    hdulist = fits.open(os.path.join(imageFileLocation, imageName))
+    hdulist = fits.open(imageFileLocation)
     imageData = hdulist[0].data
     #print hdulist.info()
     
@@ -148,6 +157,15 @@ def drawContour(img):
     plt.show()
     
     return contour_image
+
+def convert(image):
+    
+    myimage = f2n.fromfits(image)
+    
+    myimage.setzscale()
+    myimage.makepilimage("log", negative = False)
+    
+    myimage.tonet((imageName+".png"))
     
 if __name__ == '__main__':
     main()
