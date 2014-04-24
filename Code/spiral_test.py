@@ -1,9 +1,6 @@
-<<<<<<< HEAD
 import os
 import sys
-=======
 from astropy.io import fits
->>>>>>> 1b9f86217a56f969e981f7a5d614b89618642822
 import f2n
 import numpy
 import scipy
@@ -45,24 +42,12 @@ def main():
     imageFileLocation = os.path.join(opts.location,imageName)
 
     # for testing, save image data as .png for viewing
-<<<<<<< HEAD
     #convert(imageName)    
         
-    # We should make this non-hardcoded in ANY way --> Caleb agrees
-    
-    #if (len(sys.argv)!=2):
-        #imageName = sys.argv[1]
-        
-    #read in FITS file, find midpoint
-    #Get location of script because path is basically
-    #  hardcoded in. Find a better way?
-    #os.chdir(os.path.dirname(sys.argv[0]))
     imageFileLocation = opts.location
     
     #print imageFileLocation #from location of python script  
-=======
     convert(imageFileLocation)
->>>>>>> 1b9f86217a56f969e981f7a5d614b89618642822
     
     # header data unit    
     hdulist = fits.open(imageFileLocation)
@@ -85,17 +70,6 @@ def main():
     #if (opts.contour):
         #drawContour(os.path.join(imageFileLocation, imageName))
     hdulist.close()
-    
-def convert(imageName):
-    
-    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'images'))
-    
-    myimage = f2n.fromfits(os.path.join(imageFileLocation, imageName))
-    
-    myimage.setzscale()
-    myimage.makepilimage("log", negative = False)
-    
-    myimage.tonet("image.png")
     
 def getDimensions(data):    
     return data.shape
