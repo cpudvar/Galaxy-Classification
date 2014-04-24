@@ -1,13 +1,13 @@
-from astropy.io import fits
-import numpy
-import scipy
-import matplotlib
-import pylab
-from optparse import OptionParser
 import os
 import sys
+import f2n
+import numpy
+import scipy
+import pylab
+import matplotlib
 from scipy import ndimage
-from pngConv import *
+from astropy.io import fits
+from optparse import OptionParser
 import matplotlib.pyplot as plt
 
 def get_options():
@@ -35,13 +35,12 @@ def get_options():
 
     return
 
-
 def main():
     get_options()
     imageName = "m101_050511_12i60m_L.fits"
     
     # for testing, save image data as .png for viewing
-    convert(imageName)    
+    #convert(imageName)    
         
     # We should make this non-hardcoded in ANY way --> Caleb agrees
     
@@ -77,6 +76,17 @@ def main():
     #if (opts.contour):
         #drawContour(os.path.join(imageFileLocation, imageName))
     hdulist.close()
+    
+def convert(imageName):
+    
+    imageFileLocation = os.path.abspath(os.path.join(os.getcwd(), os.pardir, 'images'))
+    
+    myimage = f2n.fromfits(os.path.join(imageFileLocation, imageName))
+    
+    myimage.setzscale()
+    myimage.makepilimage("log", negative = False)
+    
+    myimage.tonet("image.png")
     
 def getDimensions(data):    
     return data.shape
