@@ -1,15 +1,14 @@
-import os
-import sys
 from astropy.io import fits
 import f2n
-import numpy
-import scipy
-import pylab
 import matplotlib
-from scipy import ndimage
-from astropy.io import fits
-from optparse import OptionParser
 import matplotlib.pyplot as plt
+import numpy
+from optparse import OptionParser
+import os
+import pylab
+import scipy
+from scipy import ndimage
+import sys
 
 def get_options():
     #Gets options from command line
