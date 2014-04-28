@@ -1,4 +1,5 @@
 from astropy.io import fits
+import cv2
 import f2n
 import matplotlib
 import matplotlib.pyplot as plt
@@ -126,6 +127,7 @@ def blur(imageData):
     
 def drawContour(img):
     contour_image = plt.contour(img, 5)
+
     plt.clabel(contour_image, inline=1, fontsize=10)
     plt.show()
     
@@ -134,7 +136,14 @@ def drawContour(img):
 def convert(image):
     
     myimage = f2n.fromfits(image)
-    
+    cContours = cv2.drawContour(img, [cnt],0,(255,0,0),-1 ) 
+    for cnt in cContours: 
+        leftmost = tuple(cnt[cnt[:,:,0].argmin()][0]) 
+        rightmost = tuple(cnt[cnt[:,:,0].argmax()][0]) 
+        topmost = tuple(cnt[cnt[:,:,1].argmin()][0]) 
+        bottommost = tuple(cnt[cnt[:,:,1].argmax()][0]) 
+    print(leftmost, rightmost, topmost, bottommost)    
+
     myimage.setzscale()
     myimage.makepilimage("log", negative = False)
     
